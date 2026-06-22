@@ -4,16 +4,16 @@
 
 | STIG ID        | Severity | Description                              | Language       | Link             |
 | -------------- | -------- | ---------------------------------------- | -------------- | ---------------- |
-| WN11-00-000135 | High     | Windows Defender Firewall Disabled       | PowerShell     | View Remediation |
-| WN11-AC-000040 | High     | Password Complexity Disabled             | PowerShell     | View Remediation |
-| WN11-AC-000035 | High     | Minimum Password Length Not Configured   | PowerShell     | View Remediation |
-| WN11-AC-000010 | High     | Account Lockout Threshold Not Configured | PowerShell     | View Remediation |
-| WN11-SO-000010 | High     | Guest Account Enabled                    | Command Prompt | View Remediation |
-| WN11-00-000160 | High     | SMBv1 Protocol Enabled                   | PowerShell     | View Remediation |
-| WN11-CC-000326 | Medium   | PowerShell Script Block Logging Disabled | PowerShell     | View Remediation |
-| WN11-CC-000327 | Medium   | PowerShell Transcription Disabled        | PowerShell     | View Remediation |
-| WN11-CC-000345 | Medium   | WinRM Basic Authentication Enabled       | PowerShell     | View Remediation |
-| WN11-00-000170 | High     | SMBv1 Client Enabled                     | PowerShell     | View Remediation |
+| WN11-00-000135 | High     | Windows Defender Firewall Disabled       | PowerShell     |[View Remediation](#1-windows-defender-firewall-disabled)
+| WN11-AC-000040 | High     | Password Complexity Disabled             | PowerShell     |[View Remediation](#2-password-complexity-disabled)
+| WN11-AC-000035 | High     | Minimum Password Length Not Configured   | PowerShell     |[View Remediation](#3-minimum-password-length-not-configured)
+| WN11-AC-000010 | High     | Account Lockout Threshold Not Configured | PowerShell     |[View Remediation](#4-account-lockout-threshold-not-configured)
+| WN11-SO-000010 | High     | Guest Account Enabled                    | Command Prompt |[View Remediation](#5-guest-account-enabled)
+| WN11-00-000160 | High     | SMBv1 Protocol Enabled                   | PowerShell     |[View Remediation](#6-smbv1-protocol-enabled)
+| WN11-CC-000326 | Medium   | PowerShell Script Block Logging Disabled | PowerShell     |[View Remediation](#7-powershell-script-block-logging-disabled)
+| WN11-CC-000327 | Medium   | PowerShell Transcription Disabled        | PowerShell     |[View Remediation](#8-powershell-transcription-disabled)
+| WN11-CC-000345 | Medium   | WinRM Basic Authentication Enabled       | PowerShell     |[View Remediation](#9-winrm-basic-authentication-enabled)
+| WN11-00-000170 | High     | SMBv1 Client Enabled                     | PowerShell     |[View Remediation](#10-smbv1-client-enabled)
 
 ---
 
@@ -47,7 +47,7 @@ secedit /export /cfg C:\secpol.cfg
 
 Enable:
 
-Computer Configuration → Windows Settings → Security Settings → Account Policies → Password Policy → Password must meet complexity requirements → Enabled
+Local Security Policy → Account Policies → Password Policy → Password must meet complexity requirements → Enabled
 
 Verify:
 
@@ -71,7 +71,7 @@ Verify:
 net accounts
 ```
 
-Minimum password length should be 14.
+Local Security Policy → Account Policies → Password Policy → Minimum password length should be 14.
 
 ---
 
@@ -89,7 +89,7 @@ Verify:
 net accounts
 ```
 
-Lockout threshold should be 5 invalid attempts.
+Local Security Policy → Account Policies → Account Lockout Policy → Account Lockout threshold should be 5 invalid attempts.
 
 ---
 
@@ -107,7 +107,7 @@ Verify:
 net user Guest
 ```
 
-Account active should show No.
+Computer Management → Local Users and Groups → Users → Guest account must be disabled.
 
 ---
 
@@ -125,7 +125,7 @@ Verify:
 Get-WindowsOptionalFeature -Online -FeatureName SMB1Protocol
 ```
 
-State should show Disabled.
+Control Panel → Programs → Programs and Features → Turn Windows features on or off. FeaturesState should show Disabled.
 
 ---
 
@@ -199,7 +199,7 @@ Verify:
 Get-SmbClientConfiguration | Select EnableSecuritySignature,RequireSecuritySignature
 ```
 
-Both settings should return True.
+Control Panel → Programs → Programs and Features → Turn Windows features on or off. FeaturesState should show Disabled.
 
 ---
 
